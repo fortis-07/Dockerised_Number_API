@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - app-network
+    # Don't expose ports directly - only through Nginx
+    expose:
+      - "8000"
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"  # Ready for HTTPS
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
