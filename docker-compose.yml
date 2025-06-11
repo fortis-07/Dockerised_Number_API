@@ -4,7 +4,7 @@ services:
   app:
     build: 
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     restart: unless-stopped
     env_file: .env
     networks:
@@ -16,7 +16,7 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - "80:80"
